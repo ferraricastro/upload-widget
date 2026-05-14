@@ -39,14 +39,16 @@ export function UploadWidgetUploadItem ({
                 </span>
             </span>
 
-            <span className="text-xxs text-zinc-400 flex gap-1.5 items-center">
+            <span className="text-xxs text-zinc-400 flex gap-1.5 items-center whitespace-nowrap overflow-hidden">
                 <span className="line-through">{formatBytes(upload.originalSizeInBytes)}</span>
                 <div className="size-1 rounded-full bg-zinc-700"></div>
                 <span>
-                    300KB
-                    <span className="text-green=400 ml-1">
-                        -94%
-                    </span>
+                    {formatBytes(upload.compressedSizeInBytes ?? 0)}
+                    {upload.compressedSizeInBytes && (
+                        <span className="text-green-400 ml-1">
+                            -{Math.round((upload.originalSizeInBytes - upload.compressedSizeInBytes) * 100 / upload.originalSizeInBytes)}%
+                        </span>
+                    )} 
                 </span>
                 <div className="size-1 rounded-full bg-zinc-700"></div>
 
@@ -69,11 +71,14 @@ export function UploadWidgetUploadItem ({
 
         <div className="absolute top-2.5 right-2.5 flex items-center gap-1">
             <Button 
-                disabled={upload.status !== 'success'}
+                aria-disabled={upload.status !== 'success'}
                 size="icon-sm"
+                asChild
             >
-                <Download className="size-4 cursor-pointer" strokeWidth={1.5}  />
-                <span className="sr-only">Dowload compressed image</span>
+                <a href={upload.remoteUrl}>
+                    <Download className="size-4 cursor-pointer" strokeWidth={1.5}  />
+                    <span className="sr-only">Dowload compressed image</span>   
+                </a>    
             </Button>
 
             <Button 
