@@ -15,7 +15,7 @@ export function UploadWidgetTitle () {
                     <span className="text-xs text-zinc-400 tabular-nums">{globalPercentage}%</span>
                 </span>
             ) : (
-                <span className="text-sm font-medium">Upload files</span>
+                <span>Upload files</span>
             )}
         </div>      
     )
